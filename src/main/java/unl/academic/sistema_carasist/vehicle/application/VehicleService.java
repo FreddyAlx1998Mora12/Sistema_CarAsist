@@ -26,7 +26,19 @@ public class VehicleService {
     public Vehicle update(Vehicle vehicle) {
         Vehicle updatedVehicle = vehicleRepository.findById(vehicle.getId())
                 .orElseThrow(()-> new NotFoundException("El producto no fue encontrado"));
-        return vehicleRepository.save(updatedVehicle);
+
+        // Validar cambios
+        updatedVehicle.setCilindraje(vehicle.getCilindraje());
+        updatedVehicle.setColor(vehicle.getColor());
+        updatedVehicle.setMarca(vehicle.getMarca());
+        updatedVehicle.setModelo(vehicle.getModelo());
+        updatedVehicle.setTipo(vehicle.getTipo());
+        updatedVehicle.setClaseTransporte(vehicle.getClaseTransporte());
+        updatedVehicle.setPlaca(vehicle.getPlaca());
+
+        log.info("Vehicle updated with id {}", updatedVehicle.getId());
+        Vehicle savedVehicle = vehicleRepository.save(updatedVehicle);
+        return savedVehicle;
     }
 
     public Vehicle findById(Integer id) {
@@ -48,6 +60,7 @@ public class VehicleService {
     public Vehicle delete(Integer id) {
         Vehicle vehicle = findById(id);
         vehicleRepository.deleteById(vehicle.getId());
+        log.info("Vehicle deleted with id {}", id);
         return vehicle;
     }
 }
