@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import unl.academic.sistema_carasist.role.domain.Rol;
 
+import java.util.List;
+
 @Data
 @Builder
 public class User {
@@ -14,7 +16,13 @@ public class User {
     private String email;
 
     // Debe aplicarse un patron para identificar a una Persona, y relacionar
+    // Necesarios para la seguridad
+    private boolean enabled;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
 
     // Relacionar con el rol, usuario con rol
-    private Rol role;
+    //OneToMany
+    private List<Rol> role;
 }

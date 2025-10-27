@@ -9,7 +9,7 @@ import unl.academic.sistema_carasist.user.infraestructure.dto.UserDTO;
 import unl.academic.sistema_carasist.user.infraestructure.mapper.IUserMapper;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserControllerImpl implements IUserController{
 
