@@ -17,5 +17,26 @@ public interface IUserMapper {
 
     //Para que el usuario se registre
     //User registerRequestToUser(RegisterRequest registerRequest);
+    /*
+    Podriamos utilizar para mandar a la base de datos como un string los roles
+    No considero pertinente.
+    @Named("stringToSet")
+    default Set<String> stringToSet(String roles) {
+        if (roles == null || roles.isEmpty()) {
+            return Set.of("USER");
+        }
+        return Arrays.stream(roles.split(","))
+                .map(String::trim)
+                .collect(Collectors.toSet());
+    }
 
+    @Named("setToString")
+    default String setToString(Set<String> roles) {
+        if (roles == null || roles.isEmpty()) {
+            return "USER";
+        }
+        return String.join(",", roles);
+    }
+
+    */
 }

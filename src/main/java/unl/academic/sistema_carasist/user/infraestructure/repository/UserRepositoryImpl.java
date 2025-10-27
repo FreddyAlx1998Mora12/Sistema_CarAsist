@@ -43,7 +43,12 @@ public class UserRepositoryImpl implements IUserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        return userRepository.findByEmail(email).map(userMapper::from_userEntity_toUser);
+    }
+
+    @Override
+    public Optional<UserEntity> findActiveUserByUsername(String username) {
+        return userRepository.findActiveUserByUsername(username);
     }
 
     @Override
