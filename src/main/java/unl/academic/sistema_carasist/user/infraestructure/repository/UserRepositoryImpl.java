@@ -2,7 +2,7 @@ package unl.academic.sistema_carasist.user.infraestructure.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import unl.academic.sistema_carasist.user.domain.IUserRepository;
+import unl.academic.sistema_carasist.user.application.ports.out.IUserRepository;
 import unl.academic.sistema_carasist.user.domain.User;
 import unl.academic.sistema_carasist.user.infraestructure.entity.UserEntity;
 import unl.academic.sistema_carasist.user.infraestructure.mapper.IUserMapper;
@@ -47,8 +47,8 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     @Override
-    public Optional<UserEntity> findActiveUserByUsername(String username) {
-        return userRepository.findActiveUserByUsername(username);
+    public Optional<User> findActiveUserByUsername(String username) {
+        return userRepository.findActiveUserByUsername(username).map(userMapper::from_userEntity_toUser);
     }
 
     @Override

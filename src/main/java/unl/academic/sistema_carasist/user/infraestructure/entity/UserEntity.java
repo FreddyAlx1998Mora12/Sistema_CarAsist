@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import unl.academic.sistema_carasist.role.domain.Rol;
 import unl.academic.sistema_carasist.role.infraestructure.entity.RolEntity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -41,9 +43,13 @@ public class UserEntity {
     @Column(name = "credentials_non_expired", nullable = false)
     private Boolean credentialsNonExpired = true;
 
-    // Relacionar con el rol, usuario con rol
-    //@OneToMany
-    //@JoinColumn(name = "rol_id")
-    //private List<RolEntity> role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",  // Tabla intermedia
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id")
+    )
+    @Builder.Default
+    private Set<RolEntity> roles = new HashSet<>();
 
 }

@@ -3,10 +3,12 @@ package unl.academic.sistema_carasist.user.infraestructure.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import unl.academic.sistema_carasist.user.domain.IUserService;
+import unl.academic.sistema_carasist.user.application.ports.in.IUserService;
 import unl.academic.sistema_carasist.user.domain.User;
 import unl.academic.sistema_carasist.user.infraestructure.dto.UserDTO;
 import unl.academic.sistema_carasist.user.infraestructure.mapper.IUserMapper;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -32,6 +34,13 @@ public class UserControllerImpl implements IUserController{
         User user_updated = userService.update(user);
         UserDTO userDTO = userMapper.fromUser_toUserDTO(user_updated);
         return ResponseEntity.ok(userDTO);
+    }
+
+    @Override
+    public ResponseEntity<List<UserDTO>> findAll() {
+        userService.findAll();
+        //UserDTO userDTO = userMapper
+        return null;
     }
 
     @GetMapping("/{id}")

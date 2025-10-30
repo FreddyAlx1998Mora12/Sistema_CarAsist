@@ -22,7 +22,7 @@ import unl.academic.sistema_carasist.exceptions.domain.BusinessException;
 import unl.academic.sistema_carasist.security.application.ports.IJwtService;
 import unl.academic.sistema_carasist.security.config.JwtProperties;
 import unl.academic.sistema_carasist.security.domain.SecurityUser;
-import unl.academic.sistema_carasist.user.domain.IUserRepository;
+import unl.academic.sistema_carasist.user.application.ports.out.IUserRepository;
 import unl.academic.sistema_carasist.user.domain.User;
 import unl.academic.sistema_carasist.user.infraestructure.mapper.IUserMapper;
 
@@ -128,7 +128,7 @@ public class AuthenthicationServiceImpl implements IAuthenthicationUseCase,
 
         // Extraer username y cargar usuario
         String username = jwtService.extractUsername(refreshToken);
-        User user = userRepository.findActiveUserByUsername(username).map(userMapper::from_userEntity_toUser)
+        User user = userRepository.findActiveUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         SecurityUser securityUser = new SecurityUser(user);
@@ -177,7 +177,7 @@ public class AuthenthicationServiceImpl implements IAuthenthicationUseCase,
             //Token tokenEntity = tokenOpt.get();
             String username = jwtService.extractUsername(token);
 
-            User user = userRepository.findActiveUserByUsername(username).map(userMapper::from_userEntity_toUser)
+            User user = userRepository.findActiveUserByUsername(username)
                     .orElse(null);
 
             if (user == null) {
