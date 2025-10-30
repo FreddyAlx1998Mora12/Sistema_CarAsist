@@ -108,13 +108,13 @@ public class SecurityConfig {
 
     //UserDetailsService permite cargar la información sobre los usuarios
     //DaoAuthenticationProvider es un proveedor de autenticación que verifica usuarios y claves
-    @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService){
-        var authProvider = new DaoAuthenticationProvider();
-        authProvider.setPasswordEncoder(passwordEncoder()); //Cómo se codifican las claves
-        authProvider.setUserDetailsService(userDetailsService);
-        return new ProviderManager(authProvider);
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService){
+//        var authProvider = new DaoAuthenticationProvider();
+//        authProvider.setPasswordEncoder(passwordEncoder()); //Cómo se codifican las claves
+//        authProvider.setUserDetailsService(userDetailsService);
+//        return new ProviderManager(authProvider);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

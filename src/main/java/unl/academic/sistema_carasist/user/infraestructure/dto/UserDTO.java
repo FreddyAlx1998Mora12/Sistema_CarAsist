@@ -1,14 +1,15 @@
 package unl.academic.sistema_carasist.user.infraestructure.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import unl.academic.sistema_carasist.role.domain.Rol;
+
+import unl.academic.sistema_carasist.role.infraestructure.dto.RolDTO;
+
+
+import java.util.List;
+
 
 @Data
 @Builder
@@ -22,5 +23,6 @@ public class UserDTO {
     private String email;
 
     // Debe aplicarse un patron para identificar a una Persona, y relacionar
-    private Rol role;
+    //@Builder.Default
+    private List<RolDTO> roles;
 }

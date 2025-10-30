@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import unl.academic.sistema_carasist.security.domain.SecurityUser;
-import unl.academic.sistema_carasist.user.domain.IUserRepository;
+import unl.academic.sistema_carasist.user.application.ports.out.IUserRepository;
 
 @Service
 @RequiredArgsConstructor

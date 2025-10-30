@@ -4,7 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import unl.academic.sistema_carasist.role.domain.Rol;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -24,5 +25,6 @@ public class User {
 
     // Relacionar con el rol, usuario con rol
     //OneToMany
-    private List<Rol> role;
+    @Builder.Default
+    private Set<Rol> roles = new HashSet<>();
 }
