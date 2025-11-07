@@ -16,6 +16,7 @@ import unl.academic.sistema_carasist.auth.application.ports.in.IRefreshTokenUseC
 import unl.academic.sistema_carasist.auth.application.ports.in.IValidateTokenUseCase;
 import unl.academic.sistema_carasist.auth.domain.Token;
 import unl.academic.sistema_carasist.auth.domain.TokenType;
+import unl.academic.sistema_carasist.auth.infraestructure.entity.TokenEntity;
 import unl.academic.sistema_carasist.auth.infraestructure.mapper.ITokenMapper;
 import unl.academic.sistema_carasist.auth.infraestructure.repository.ITokenRepository;
 import unl.academic.sistema_carasist.exceptions.domain.BusinessException;
@@ -105,13 +106,31 @@ public class AuthenthicationServiceImpl implements IAuthenthicationUseCase,
     public void logout(String token) {
         log.info("Logging out user");
 
-        Token tokenOpt = tokenRepository.findByToken(token).map(tokenMapper::toToken).orElse(null);
-        if (tokenOpt!= null) {
-            //Token tokenEntity = (Token) tokenOpt.get();
-            tokenOpt.setRevoked(true);
-            tokenRepository.save(tokenMapper.toTokenEntity(tokenOpt));
-            log.info("Token revoked successfully");
+//        Token tokenOpt = tokenRepository.findByToken(token).map(tokenMapper::toToken).orElse(null);
+//        if (tokenOpt!= null) {
+//            //Token tokenEntity = (Token) tokenOpt.get();
+//            tokenOpt.setRevoked(true);
+//            tokenRepository.save(tokenMapper.toTokenEntity(tokenOpt));
+//            log.info("Token revoked successfully");
+//        }
+        // 1. Buscar el token en la BD
+        TokenEntity tokenEntity = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new BusinessException("Token not found"));
+
+        // 2. Validar que el token no esté ya revocado
+        if (tokenEntity.getRevoked()) {
+            log.warn("Token already revoked");
+            throw new BusinessException("Token already revoked");
         }
+
+        // 3. Marcar como revocado y expirado
+        tokenEntity.setRevoked(true);
+        tokenEntity.setExpired(true);
+
+        // 4. Guardar (actualizar, no insertar)
+        tokenRepository.save(tokenEntity);
+
+        log.info("Token revoked successfully");
     }
 
     @Override

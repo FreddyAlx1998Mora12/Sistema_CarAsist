@@ -31,7 +31,7 @@ public class RolServiceImpl implements IRolService {
         }
 
         // Convertir DTO a dominio
-        Rol rol = rolesMapper.toRol(rolDTO);
+        Rol rol = rolesMapper.toRol_DTO(rolDTO);
 
         // Guardar
         Rol savedRol = rolRepository.save(rol);
@@ -57,7 +57,7 @@ public class RolServiceImpl implements IRolService {
         });
 
         // Convertir y actualizar
-        Rol rol = rolesMapper.toRol(rolDTO);
+        Rol rol = rolesMapper.toRol_DTO(rolDTO);
         Rol updatedRol = rolRepository.update(rol);
 
         log.info("Role updated successfully: {}", updatedRol.getName());

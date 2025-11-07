@@ -1,8 +1,10 @@
 package unl.academic.sistema_carasist.security.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -46,13 +48,19 @@ public class SecurityConfig {
 
     //@Qualifier("handlerExceptionResolver")
     private HandlerExceptionResolver handlerExceptionResolver;
+
+    @Lazy
+    @Autowired
     private JWT_AuthenticationFilter jwtAuthenticationFilter;
+
     private final UserDetailsService userDetailsService;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
     private static final String[] PUBLIC_ENDPOINTS = {
+            //"/api/v1/roles",
             "/api/v1/auth/login",
+            "/api/v1/auth/logout",
             "/api/v1/auth/refresh",
             "/api/v1/auth/register",
             "/actuator/health",
@@ -85,7 +93,9 @@ public class SecurityConfig {
                                 .policyDirectives("default-src 'self'")
                         )
                         .frameOptions(frame -> frame.deny())
-                        .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.valueOf("1; mode=block")))
+                        .xssProtection(xss -> xss
+                                .headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)
+                        )
                         .contentTypeOptions(contentType -> contentType.disable())
                 );
 

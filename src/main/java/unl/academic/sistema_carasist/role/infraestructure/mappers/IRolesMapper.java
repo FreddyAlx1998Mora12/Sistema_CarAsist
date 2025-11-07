@@ -1,6 +1,7 @@
 package unl.academic.sistema_carasist.role.infraestructure.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.springframework.ui.ModelMap;
 import unl.academic.sistema_carasist.role.domain.Rol;
@@ -18,7 +19,12 @@ public interface IRolesMapper {
     Rol toRol(RolEntity userEntity);
     RolEntity toRolEntity(Rol user);
 
-    Rol toRol(RolDTO userDTO);
+    @Mapping(source = "rolID", target = "rolId")
+    @Mapping(source = "rolName", target = "name")
+    Rol toRol_DTO(RolDTO userDTO);
+
+    @Mapping(source = "rolId", target = "rolID")
+    @Mapping(source = "name", target = "rolName")
     RolDTO toRolDTO(Rol user);
 
     List<Rol> toListRols(List<RolEntity> rolsEntities);

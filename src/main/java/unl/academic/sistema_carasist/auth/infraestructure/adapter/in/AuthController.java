@@ -45,6 +45,7 @@ public class AuthController implements IAuthController{
      * @param userRegisterDTO Datos de Usuario
      * @return Token de acceso y refresh token,a la vez, cuenta creada
      */
+    @PostMapping("/register")
     @Override
     public ResponseEntity<LoginResponseDTO> register_user(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
         log.info("User registration request received for username: {}", userRegisterDTO.username());
